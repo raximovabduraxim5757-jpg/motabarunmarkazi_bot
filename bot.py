@@ -13,68 +13,46 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ====== MUHIM: TOKEN VA WEB APP URL ======
+# Railway/Render da Environment Variables ga BOT_TOKEN va WEB_APP_URL qo'shganingizga ishonch hosil qiling!
 BOT_TOKEN = os.environ.get('BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
-# DIQQAT: Bu yerga Netlify/Vercel saytingizning TO'LIQ manzilini yozing!
+# DIQQAT: Bu yerga GitHub Pages (yoki Netlify/Vercel) saytingizning TO'LIQ manzilini yozing!
 WEB_APP_URL = os.environ.get('WEB_APP_URL', 'https://your-site.netlify.app')
 
 # ====== Telegram Bot funksiyalari ======
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start komandasi"""
     user = update.effective_user
-    first_name = user.first_name if user.first_name else "aziz"
+    first_name = user.first_name if user.first_name else "Hurmatli mijoz"
     
-    # Tugmalar
+    # ✨ Pastdagi 3 ta tugma (Aloqa, Kanal) butunlay olib tashlandi.
+    # Faqat bitta tugma: Do'konga kirish
     keyboard = [
-        # 🔥 BU YERDA "🛒 Zakaz berish" o'rniga "🌾 Do'konga kirish" yozildi
-        [InlineKeyboardButton("🌾 Do'konga kirish", web_app={"url": WEB_APP_URL})],
-        [InlineKeyboardButton("📞 Aloqa", url="https://t.me/unbaza_dostavka")],
-        [InlineKeyboardButton("📢 Kanal", url="https://t.me/motabar_andijon")]
+        [InlineKeyboardButton("🌾 Do'konga kirish", web_app={"url": WEB_APP_URL})]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await update.message.reply_text(
+    # ✨ Premium va do'stona matn
+    welcome_text = (
         f"👋 Assalomu alaykum, {first_name}!\n\n"
-        "🌾 Mo'tabar Un Markazi - Andijon viloyatida joylashgan, eng sifatli va arzon un mahsulotlarini yetkazib beruvchi markaz.\n\n"
-        "⬇️ Quyidagi tugmani bosib, do'konimizga xush kelibsiz!",
-        reply_markup=reply_markup
+        "🌾 **Mo'tabar Un Markazi** - Andijon viloyatining ishonchli va sifatli un mahsulotlari yetkazib beruvchisi.\n\n"
+        "🛍️ Sizga eng yaxshi xizmatni taqdim etishdan mamnunmiz. Premium sifat, barakali dasturxon!\n\n"
+        "⬇️ Quyidagi **【 Ochish 】** tugmasini bosib, do'konimizga tashrif buyuring.\n"
+        "*(Telefon yoki kompyuteringizda qulay interfeysda xarid qiling!)*"
+    )
+    
+    await update.message.reply_text(
+        welcome_text,
+        reply_markup=reply_markup,
+        parse_mode='Markdown'  # Matnni chiroyli ko'rsatish uchun
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Yordam komandasi"""
     await update.message.reply_text(
-        "🆘 Yordam:\n\n"
-        "1. /start - Botni qayta ishga tushirish\n"
-        "2. '🌾 Do'konga kirish' tugmasi - Mahsulotlarni ko'rish va zakaz berish\n"
-        "3. '📞 Aloqa' tugmasi - Operator bilan bog'lanish\n"
-        "4. '📢 Kanal' tugmasi - Bizning kanalga obuna bo'lish"
-    )
-
-async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Biz haqimizda"""
-    await update.message.reply_text(
-        "🌾 Mo'tabar Un Markazi\n\n"
-        "📍 Manzil: Andijon viloyati, Jaxon Bozori\n"
-        "📅 Tashkil etilgan: 1998-yil\n\n"
-        "💪 25+ yillik tajriba\n"
-        "✅ Sifat kafolati\n"
-        "🚚 Tez yetkazib berish\n\n"
-        "🏷️ Bizning mahsulotlar:\n"
-        "• MO'TABAR (1-nav, 2-nav, Premium)\n"
-        "• QADIMGI-NAV\n"
-        "• ADMIRAL\n"
-        "• CHESTER\n"
-        "• CORNER\n"
-        "• DANI-NAN\n"
-        "• ORDABASY\n"
-        "• DIKHAN-BABA\n"
-        "• DOBRIY MELNIK\n"
-        "• KEREMET\n"
-        "• ELIT KOSTANAY\n"
-        "• SALAMAT\n"
-        "• TROYKA\n"
-        "• UNO\n"
-        "• YARKO\n"
-        "• ZO'R"
+        "🆘 **Yordam markazi:**\n\n"
+        "1️⃣ /start - Botni qayta ishga tushirish\n"
+        "2️⃣ **【 Ochish 】** tugmasi - Do'konimizga kirish va mahsulotlarni ko'rish\n\n"
+        "💬 Savollar bo'lsa, do'kon ichidagi '📞 Aloqa' bo'limidan bizga murojaat qilishingiz mumkin."
     )
 
 # ====== Flask Server (Platforma portni ko'rishi uchun) ======
@@ -97,7 +75,6 @@ def main():
     application = Application.builder().token(BOT_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(CommandHandler("about", about))
     
     logger.info("🚀 Bot va Flask server ishga tushdi...")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
