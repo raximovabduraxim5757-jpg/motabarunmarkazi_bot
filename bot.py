@@ -25,7 +25,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Tugmalar
     keyboard = [
-        [InlineKeyboardButton("🛒 Zakaz berish", web_app={"url": WEB_APP_URL})],
+        # 🔥 BU YERDA "🛒 Zakaz berish" o'rniga "🌾 Do'konga kirish" yozildi
+        [InlineKeyboardButton("🌾 Do'konga kirish", web_app={"url": WEB_APP_URL})],
         [InlineKeyboardButton("📞 Aloqa", url="https://t.me/unbaza_dostavka")],
         [InlineKeyboardButton("📢 Kanal", url="https://t.me/motabar_andijon")]
     ]
@@ -34,7 +35,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"👋 Assalomu alaykum, {first_name}!\n\n"
         "🌾 Mo'tabar Un Markazi - Andijon viloyatida joylashgan, eng sifatli va arzon un mahsulotlarini yetkazib beruvchi markaz.\n\n"
-        "🛒 Pastdagi tugma orqali zakaz berishingiz mumkin.",
+        "⬇️ Quyidagi tugmani bosib, do'konimizga xush kelibsiz!",
         reply_markup=reply_markup
     )
 
@@ -43,7 +44,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🆘 Yordam:\n\n"
         "1. /start - Botni qayta ishga tushirish\n"
-        "2. '🛒 Zakaz berish' tugmasi - Mahsulotlarni ko'rish va zakaz berish\n"
+        "2. '🌾 Do'konga kirish' tugmasi - Mahsulotlarni ko'rish va zakaz berish\n"
         "3. '📞 Aloqa' tugmasi - Operator bilan bog'lanish\n"
         "4. '📢 Kanal' tugmasi - Bizning kanalga obuna bo'lish"
     )
