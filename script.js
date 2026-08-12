@@ -12,7 +12,9 @@ if (tg) {
   } catch (e) {}
 }
 
-/* SPLASH SCREEN ANIMATSIYASI (Yangi qo'shilgan) */
+/* =========================================================
+   SPLASH SCREEN ANIMATSIYASI (VAQT 4 SONIYAGA UZAYTIRILDI)
+   ========================================================= */
 window.addEventListener('load', function() {
   setTimeout(function() {
     var splash = document.getElementById('splash-screen');
@@ -20,10 +22,11 @@ window.addEventListener('load', function() {
       splash.classList.add('fade-out');
       setTimeout(function() {
         splash.style.display = 'none';
-      }, 500);
+      }, 600); // 0.6 soniya davomida yo'qoladi
     }
-  }, 2200); // 2.2 soniya davom etadi
+  }, 4000); // <-- 4000ms = 4 soniya davomida ekranda turadi
 });
+
 
 /* =========================================================
    40 TA MAHSULOT
