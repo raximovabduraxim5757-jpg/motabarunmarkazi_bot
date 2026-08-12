@@ -10,6 +10,16 @@
 </head>
 <body>
 
+<!-- SPLASH SCREEN (Kirish animatsiyasi) -->
+<div id="splash-screen">
+  <div class="splash-logo">
+    <div class="splash-icon"><img src="images/logo.jpg" alt="Logo" /></div>
+    <h1>Mo'tabar</h1>
+    <span>Un Markazi</span>
+    <div class="splash-loader"></div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div id="toast-container"></div>
 
@@ -47,7 +57,7 @@
         <button class="btn btn-glow" onclick="goToPage('zakaz')">Zakaz berish</button>
         <div class="hero-stats">
           <div class="stat"><span class="stat-num" data-count="25" data-suffix="+">0</span><span class="stat-label">Yil tajriba</span></div>
-          <div class="stat"><span class="stat-num" data-count="40"data-suffix="+">0</span><span class="stat-label">Mahsulot turi</span></div>
+          <div class="stat"><span class="stat-num" data-count="40" data-suffix="+">0</span><span class="stat-label">Mahsulot turi</span></div>
           <div class="stat"><span class="stat-num" data-count="5000" data-suffix="+">0</span><span class="stat-label">Mijoz</span></div>
         </div>
       </section>
@@ -125,7 +135,7 @@
         <button class="btn btn-full" onclick="goToPage('mahsulotlar')">Mahsulotlarni ko'rish</button>
       </div>
 
-      <!-- BUYURTMA FORMASI (faqat shaxsiy ma'lumotlar) -->
+      <!-- BUYURTMA FORMASI -->
       <div class="card">
         <div class="success-message" id="success-message">✅ Zakaz muvaffaqiyatli yuborildi!</div>
         <form id="order-form" onsubmit="submitOrder(event)">
@@ -143,7 +153,7 @@
             <label for="inp-address">Yetkazib berish manzili</label>
             <div style="display:flex;gap:10px;align-items:stretch;">
               <textarea id="inp-address" placeholder="Viloyat, tuman, ko'cha, uy..." rows="3" required style="flex:1;min-height:60px;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:16px;background:var(--bg-light);color:var(--fg);outline:none;transition:border-color 0.2s;"></textarea>
-              <button type="button" onclick="getLocation()" class="btn-location" style="background:var(--primary);color:white;border:none;border-radius:10px;padding:0 14px;font-size:20px;cursor:pointer;height:auto;min-height:60px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s;box-shadow:0 2px 8px rgba(196,30,58,0.3);-webkit-tap-highlight-color:transparent;">
+              <button type="button" id="btn-location" onclick="getLocation()" class="btn-location">
                 📍
               </button>
             </div>
@@ -223,6 +233,38 @@
     </a>
   </nav>
 
+</div>
+
+<!-- PRODUCT MODAL (Oldingi kodda yo'q edi, shuning uchun ishlamagan!) -->
+<div id="modal-overlay" class="modal-overlay" onclick="closeProductModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-sheet-header">
+      <div class="sheet-img-wrap"><img id="sheet-img" src="" alt="" /></div>
+      <div class="sheet-info">
+        <span id="sheet-nav" class="sheet-nav"></span>
+        <h3 id="sheet-name"></h3>
+        <div id="sheet-price" class="sheet-price"></div>
+      </div>
+      <button id="sheet-fav" class="sheet-fav" onclick="toggleFavoriteFromSheet()">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-6.7-4.35-9.3-8.28C1.02 10.2 1.63 6.6 4.6 5.1c2.2-1.1 4.6-.3 5.9 1.5.4.55.8 1.1 1.5 1.1s1.1-.55 1.5-1.1c1.3-1.8 3.7-2.6 5.9-1.5 2.97 1.5 3.58 5.1 1.9 7.62C18.7 16.65 12 21 12 21z"/></svg>
+      </button>
+    </div>
+    <div class="modal-sheet-body">
+      <p id="sheet-desc"></p>
+      <div class="product-props">
+        <div class="product-prop"><div class="dot">✓</div><span><strong>Afzalligi:</strong> <span id="sheet-adv"></span></span></div>
+        <div class="product-prop"><div class="dot">✓</div><span><strong>Tavsiya:</strong> <span id="sheet-best"></span></span></div>
+      </div>
+      <div class="sheet-actions">
+        <div class="qty-stepper">
+          <button type="button" onclick="sheetQty(-1)">−</button>
+          <span id="sheet-qty">1</span>
+          <button type="button" onclick="sheetQty(1)">+</button>
+        </div>
+        <button class="btn btn-add" onclick="addToCartFromSheet()">Savatga qo'shish</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="script.js"></script>
