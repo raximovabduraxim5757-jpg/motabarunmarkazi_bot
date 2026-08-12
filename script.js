@@ -13,9 +13,9 @@ if (tg) {
 }
 
 /* =========================================================
-   SPLASH SCREEN ANIMATSIYASI (VAQT 4 SONIYAGA UZAYTIRILDI)
+   SPLASH SCREEN ANIMATSIYASI (Telegram Web App uchun maxsus)
    ========================================================= */
-window.addEventListener('load', function() {
+document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
     var splash = document.getElementById('splash-screen');
     if(splash) {
@@ -24,7 +24,7 @@ window.addEventListener('load', function() {
         splash.style.display = 'none';
       }, 600); // 0.6 soniya davomida yo'qoladi
     }
-  }, 4000); // <-- 4000ms = 4 soniya davomida ekranda turadi
+  }, 3500); // <-- 3.5 soniya davomida ekranda turadi. (Telegram tez ochilgani uchun 4 soniya emas, 3.5 yetarli)
 });
 
 
