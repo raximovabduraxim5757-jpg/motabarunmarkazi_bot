@@ -13,8 +13,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ====== MUHIM: TOKEN VA WEB APP URL ======
-# Render.com da Environment Variables ga BOT_TOKEN va WEB_APP_URL qo'shganingizga ishonch hosil qiling!
 BOT_TOKEN = os.environ.get('BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
+# DIQQAT: Bu yerga Netlify/Vercel saytingizning TO'LIQ manzilini yozing!
 WEB_APP_URL = os.environ.get('WEB_APP_URL', 'https://your-site.netlify.app')
 
 # ====== Telegram Bot funksiyalari ======
@@ -33,7 +33,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await update.message.reply_text(
         f"👋 Assalomu alaykum, {first_name}!\n\n"
-        "🏪 Mo'tabar Un Markazi - Andijon viloyatida joylashgan, eng sifatli va arzon un mahsulotlarini yetkazib beruvchi va sotuvchi markaz sizning xizmatingizda!\n\n"
+        "🌾 Mo'tabar Un Markazi - Andijon viloyatida joylashgan, eng sifatli va arzon un mahsulotlarini yetkazib beruvchi markaz.\n\n"
         "🛒 Pastdagi tugma orqali zakaz berishingiz mumkin.",
         reply_markup=reply_markup
     )
@@ -76,7 +76,7 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "• ZO'R"
     )
 
-# ====== Flask Server (Render portni ko'rishi uchun) ======
+# ====== Flask Server (Platforma portni ko'rishi uchun) ======
 flask_app = Flask(__name__)
 
 @flask_app.route('/')
@@ -84,31 +84,21 @@ def home():
     return "Bot is running!"
 
 def run_web_server():
-    # Render avtomatik ravishda PORT o'zgaruvchisini beradi
     port = int(os.environ.get('PORT', 10000))
-    # Flask serverini ishga tushiramiz
-    flask_app.run(host='0.0.0.0', port=port)
+    flask_app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
 
 # ====== Asosiy ishga tushirish qismi ======
 def main():
-    """Telegram botini va Flask serverni bir vaqtda ishga tushirish"""
-    
-    # 1. Flask (Veb) serverni fonda (threadda) ishga tushiramiz
     flask_thread = threading.Thread(target=run_web_server)
-    flask_thread.daemon = True  # Bot to'xtasa, server ham to'xtasin
+    flask_thread.daemon = True
     flask_thread.start()
     
-    # 2. Telegram botini ishga tushiramiz
     application = Application.builder().token(BOT_TOKEN).build()
-    
-    # Komandalar
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("about", about))
     
     logger.info("🚀 Bot va Flask server ishga tushdi...")
-    
-    # Pollingni ishga tushirish
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':
