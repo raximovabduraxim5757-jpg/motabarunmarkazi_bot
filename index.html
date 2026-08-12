@@ -10,19 +10,23 @@
 </head>
 <body>
 
-<!-- SPLASH SCREEN (Kirish animatsiyasi) -->
+<!-- SPLASH SCREEN -->
 <div id="splash-screen">
-  <div class="splash-logo">
-    <div class="splash-icon"><img src="images/logo.jpg" alt="Logo" /></div>
+  <div class="splash-icon-wrapper">
+    <div class="splash-icon">
+      <img src="images/logo.jpg" alt="Mo'tabar Logo" />
+    </div>
+  </div>
+  <div class="splash-title">
     <h1>Mo'tabar</h1>
     <span>Un Markazi</span>
-    <div class="splash-loader"></div>
+  </div>
+  <div class="splash-loader">
+    <div class="splash-loader-bar"></div>
   </div>
 </div>
 
-<!-- TOAST -->
-<div id="toast-container"></div>
-
+<!-- ASOSIY APP -->
 <div id="app">
 
   <header>
@@ -57,7 +61,7 @@
         <button class="btn btn-glow" onclick="goToPage('zakaz')">Zakaz berish</button>
         <div class="hero-stats">
           <div class="stat"><span class="stat-num" data-count="25" data-suffix="+">0</span><span class="stat-label">Yil tajriba</span></div>
-          <div class="stat"><span class="stat-num" data-count="40" data-suffix="+">0</span><span class="stat-label">Mahsulot turi</span></div>
+          <div class="stat"><span class="stat-num" data-count="40"data-suffix="+">0</span><span class="stat-label">Mahsulot turi</span></div>
           <div class="stat"><span class="stat-num" data-count="5000" data-suffix="+">0</span><span class="stat-label">Mijoz</span></div>
         </div>
       </section>
@@ -135,7 +139,7 @@
         <button class="btn btn-full" onclick="goToPage('mahsulotlar')">Mahsulotlarni ko'rish</button>
       </div>
 
-      <!-- BUYURTMA FORMASI -->
+      <!-- BUYURTMA FORMASI (faqat shaxsiy ma'lumotlar) -->
       <div class="card">
         <div class="success-message" id="success-message">✅ Zakaz muvaffaqiyatli yuborildi!</div>
         <form id="order-form" onsubmit="submitOrder(event)">
@@ -153,7 +157,7 @@
             <label for="inp-address">Yetkazib berish manzili</label>
             <div style="display:flex;gap:10px;align-items:stretch;">
               <textarea id="inp-address" placeholder="Viloyat, tuman, ko'cha, uy..." rows="3" required style="flex:1;min-height:60px;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:16px;background:var(--bg-light);color:var(--fg);outline:none;transition:border-color 0.2s;"></textarea>
-              <button type="button" id="btn-location" onclick="getLocation()" class="btn-location">
+              <button type="button" onclick="getLocation()" class="btn-location" style="background:var(--primary);color:white;border:none;border-radius:10px;padding:0 14px;font-size:20px;cursor:pointer;height:auto;min-height:60px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s;box-shadow:0 2px 8px rgba(196,30,58,0.3);-webkit-tap-highlight-color:transparent;">
                 📍
               </button>
             </div>
@@ -235,7 +239,7 @@
 
 </div>
 
-<!-- PRODUCT MODAL (Oldingi kodda yo'q edi, shuning uchun ishlamagan!) -->
+<!-- PRODUCT MODAL -->
 <div id="modal-overlay" class="modal-overlay" onclick="closeProductModal(event)">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-sheet-header">
