@@ -1,9 +1,11 @@
 import os
 import logging
+import threading
+from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes
 
-# Logging
+# ====== Logging sozlash ======
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
@@ -11,9 +13,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ====== MUHIM: TOKEN VA WEB APP URL ======
+# Render.com da Environment Variables ga BOT_TOKEN va WEB_APP_URL qo'shganingizga ishonch hosil qiling!
 BOT_TOKEN = os.environ.get('BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
 WEB_APP_URL = os.environ.get('WEB_APP_URL', 'https://your-site.netlify.app')
 
+# ====== Telegram Bot funksiyalari ======
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start komandasi"""
     user = update.effective_user
@@ -72,40 +76,40 @@ async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "• ZO'R"
     )
 
-def main():
-    """Botni ishga tushirish"""
-    app = Application.builder().token(BOT_TOKEN).build()
-    
-    # Komandalar
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("help", help_command))
-    app.add_handler(CommandHandler("about", about))
-    
-    logger.info("🚀 Bot ishga tushdi...")
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+# ====== Flask Server (Render portni ko'rishi uchun) ======
+flask_app = Flask(__name__)
 
-if __name__ == '__main__':
-    main()
-
-
-from flask import Flask
-import threading
-import os
-
-app = Flask(__name__)
-
-@app.route('/')
+@flask_app.route('/')
 def home():
     return "Bot is running!"
 
 def run_web_server():
+    # Render avtomatik ravishda PORT o'zgaruvchisini beradi
     port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
+    # Flask serverini ishga tushiramiz
+    flask_app.run(host='0.0.0.0', port=port)
 
-# Asosiy dasturga shuni qo'shing:
-if __name__ == "__main__":
-    # 1. Fonda veb-serverni ishga tushiramiz (Port ochish uchun)
-    threading.Thread(target=run_web_server).start()
+# ====== Asosiy ishga tushirish qismi ======
+def main():
+    """Telegram botini va Flask serverni bir vaqtda ishga tushirish"""
     
-    # 2. Asosiy bot kodingizni ishga tushiring (Polling)
-    # Masalan: updater.start_polling() yoki bot.polling()
+    # 1. Flask (Veb) serverni fonda (threadda) ishga tushiramiz
+    flask_thread = threading.Thread(target=run_web_server)
+    flask_thread.daemon = True  # Bot to'xtasa, server ham to'xtasin
+    flask_thread.start()
+    
+    # 2. Telegram botini ishga tushiramiz
+    application = Application.builder().token(BOT_TOKEN).build()
+    
+    # Komandalar
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(CommandHandler("about", about))
+    
+    logger.info("🚀 Bot va Flask server ishga tushdi...")
+    
+    # Pollingni ishga tushirish
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
+
+if __name__ == '__main__':
+    main()
