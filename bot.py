@@ -86,3 +86,26 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+from flask import Flask
+import threading
+import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_web_server():
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
+
+# Asosiy dasturga shuni qo'shing:
+if __name__ == "__main__":
+    # 1. Fonda veb-serverni ishga tushiramiz (Port ochish uchun)
+    threading.Thread(target=run_web_server).start()
+    
+    # 2. Asosiy bot kodingizni ishga tushiring (Polling)
+    # Masalan: updater.start_polling() yoki bot.polling()
