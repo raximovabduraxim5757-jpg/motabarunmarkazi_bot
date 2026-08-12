@@ -41,6 +41,106 @@ body {
   overscroll-behavior-y: none;
 }
 
+/* ======================================================
+   100% CSS ASOSIDAGI SPLASH SCREEN (TEZKOR: 2.2 soniya)
+   ====================================================== */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #f5efe7;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: splashFadeOut 2.2s forwards ease-in-out; /* 2.2 soniyadan keyin yo'qoladi */
+  pointer-events: none;
+}
+
+@keyframes splashFadeOut {
+  0% { opacity: 1; transform: scale(1); }
+  60% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.05); display: none; }
+}
+
+/* Splash ichidagi elementlar */
+.splash-icon-wrapper {
+  opacity: 0;
+  animation: splashIn 0.8s forwards ease-out 0.1s;
+  margin-bottom: 20px;
+}
+
+.splash-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--primary);
+  box-shadow: 0 0 40px rgba(196, 30, 58, 0.3);
+}
+.splash-icon img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.splash-title {
+  text-align: center;
+  opacity: 0;
+  animation: splashTitleUp 0.8s forwards ease-out 0.3s;
+}
+.splash-title h1 {
+  font-family: var(--font-display);
+  font-size: 38px;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.splash-title span {
+  display: block;
+  font-size: 18px;
+  color: var(--muted-fg);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.splash-loader {
+  margin-top: 30px;
+  width: 150px;
+  height: 4px;
+  background: #e0d4c6;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0;
+  animation: splashIn 0.8s forwards ease-out 0.6s;
+}
+.splash-loader-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--primary);
+  border-radius: 6px;
+  animation: splashProgress 1.2s forwards ease-in-out 0.3s;
+}
+
+@keyframes splashIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes splashTitleUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splashProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ======================================================
+   APP (2.2 soniyagacha yashirin turadi)
+   ====================================================== */
 #app {
   width: 100%;
   max-width: 480px;
@@ -50,127 +150,15 @@ body {
   position: relative;
   overflow-x: hidden;
   transition: padding-bottom .3s ease;
+  /* App 2.2 soniya davomida 0 (ko'rinmas) bo'ladi */
+  opacity: 0; 
+  animation: showApp 0.01s forwards 2.2s;
 }
 
-/* ===== SPLASH SCREEN (YANGI ANIMATSIYA) ===== */
-#splash-screen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100vh;
-  background: var(--bg);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-#splash-screen.fade-out {
-  opacity: 0;
-  transform: scale(1.1);
-  pointer-events: none;
-}
-.splash-logo {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.splash-icon {
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: 20px;
-  border: 4px solid var(--primary);
-  box-shadow: 0 0 40px rgba(196, 30, 58, 0.3);
-  animation: splashLogoPop 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  transform: scale(0);
-}
-.splash-icon img { width: 100%; height: 100%; object-fit: cover; }
-@keyframes splashLogoPop {
-  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-.splash-logo h1 {
-  font-family: var(--font-display);
-  font-size: 32px;
-  color: var(--primary);
-  font-weight: 700;
-  opacity: 0;
-  animation: splashTextUp 0.8s ease forwards 0.3s;
-}
-.splash-logo span {
-  font-size: 18px;
-  color: var(--muted-fg);
-  font-weight: 500;
-  opacity: 0;
-  animation: splashTextUp 0.8s ease forwards 0.5s;
-}
-@keyframes splashTextUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.splash-loader {
-  width: 60px; height: 4px;
-  background: var(--border);
-  border-radius: 4px;
-  margin-top: 30px;
-  overflow: hidden;
-  opacity: 0;
-  animation: splashTextUp 0.8s ease forwards 0.6s;
-}
-.splash-loader::after {
-  content: '';
-  display: block;
-  height: 100%;
-  width: 40%;
-  background: var(--primary);
-  border-radius: 4px;
-  animation: splashBarMove 1.2s ease-in-out infinite;
-}
-@keyframes splashBarMove {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(300%); }
+@keyframes showApp {
+  to { opacity: 1; }
 }
 
-/* ===== TOAST ===== */
-#toast-container {
-  position: fixed;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: calc(100% - 32px);
-  max-width: 448px;
-  pointer-events: none;
-}
-.toast {
-  background: var(--fg);
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 13.5px;
-  font-weight: 500;
-  box-shadow: var(--shadow-md);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: toastIn .35s cubic-bezier(.22, 1, .36, 1);
-}
-.toast.success { background: var(--success); }
-.toast.error { background: var(--primary); }
-.toast.leaving { animation: toastOut .3s cubic-bezier(.22, 1, .36, 1) forwards; }
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(-14px) scale(.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes toastOut {
-  to { opacity: 0; transform: translateY(-14px) scale(.96); }
-}
-
-/* ===== HEADER ===== */
 header {
   background: linear-gradient(120deg, var(--primary), var(--primary-dark));
   color: var(--primary-f);
@@ -200,7 +188,6 @@ header h1 {
   letter-spacing: .2px;
 }
 
-/* ===== NAV ===== */
 nav {
   position: fixed;
   bottom: 0;
@@ -250,7 +237,6 @@ body.keyboard-open #app { padding-bottom: 0; }
 }
 .nav-item span { font-size: 9px; font-weight: 600; letter-spacing: 0.2px; }
 
-/* ===== CART FAB ===== */
 .cart-fab {
   position: fixed;
   right: 16px;
@@ -313,7 +299,6 @@ body.keyboard-open .cart-fab { display: none; }
   100% { transform: scale(1); }
 }
 
-/* ===== MODAL OVERLAY (Muhim tuzatish!) ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -376,7 +361,6 @@ body.keyboard-open .cart-fab { display: none; }
 .sheet-actions .btn { height: 48px; flex: 1; min-width: unset; }
 .sheet-actions .qty-stepper { padding: 4px 10px; }
 
-/* ===== PAGES ===== */
 .page { display: none; }
 .page.active {
   display: block;
@@ -387,7 +371,6 @@ body.keyboard-open .cart-fab { display: none; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== HERO ===== */
 .hero {
   position: relative;
   padding: 36px 24px 30px;
@@ -466,7 +449,6 @@ body.keyboard-open .cart-fab { display: none; }
   z-index: 1;
 }
 
-/* ===== BUTTONS ===== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -522,7 +504,6 @@ body.keyboard-open .cart-fab { display: none; }
   transform: scale(.97);
 }
 
-/* ===== HERO STATS ===== */
 .hero-stats {
   position: relative;
   z-index: 1;
@@ -558,7 +539,6 @@ body.keyboard-open .cart-fab { display: none; }
   text-align: center;
 }
 
-/* ===== SECTION ===== */
 .section {
   padding: 26px 16px 8px;
 }
@@ -582,7 +562,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 .link-more:hover { transform: translateX(4px); }
 
-/* ===== PRODUCT GRID ===== */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -610,7 +589,6 @@ body.keyboard-open .cart-fab { display: none; }
 .card-name { font-size: 13px; font-weight: 700; }
 .card-price { font-size: 11.5px; color: var(--muted-fg); margin-top: 3px; }
 
-/* ===== WHEAT DIVIDER ===== */
 .wheat-divider {
   display: flex;
   justify-content: center;
@@ -621,7 +599,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 .wheat-divider svg { width: 18px; height: 18px; }
 
-/* ===== BADGES ===== */
 .badges-row {
   display: flex;
   gap: 8px;
@@ -645,7 +622,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 .mini-badge:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
 
-/* ===== SEARCH ===== */
 .search-bar {
   margin: 0 16px 12px;
   display: flex;
@@ -712,7 +688,6 @@ body.keyboard-open .cart-fab { display: none; }
   box-shadow: 0 3px 10px rgba(196, 30, 58, .3);
 }
 
-/* ===== EMPTY STATE ===== */
 .empty-state {
   display: none;
   flex-direction: column;
@@ -727,7 +702,6 @@ body.keyboard-open .cart-fab { display: none; }
 .empty-state p { font-weight: 700; font-size: 15px; color: var(--fg); }
 .empty-state span { font-size: 13px; }
 
-/* ===== PRODUCT LIST ===== */
 .product-list { padding: 0 16px 16px; }
 .product-card-full {
   background: var(--card);
@@ -846,7 +820,6 @@ body.keyboard-open .cart-fab { display: none; }
   background: #2a2a2a;
 }
 
-/* ===== CART SECTION ===== */
 .cart-section { display: none; }
 .cart-section.show { display: block; }
 .cart-empty {
@@ -942,7 +915,6 @@ body.keyboard-open .cart-fab { display: none; }
   font-family: var(--font-display);
 }
 
-/* ===== ABOUT ===== */
 .about-block {
   margin: 16px;
   background: var(--bg-light);
@@ -959,7 +931,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 .about-block p { font-size: 14px; color: var(--muted-fg); line-height: 1.6; }
 
-/* ===== PAGE HEADER ===== */
 .page-header {
   padding: 26px 20px 16px;
 }
@@ -983,7 +954,6 @@ body.keyboard-open .cart-fab { display: none; }
   margin: 0 auto 12px;
 }
 
-/* ===== CARDS ===== */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -995,7 +965,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 .card:hover { box-shadow: var(--shadow-md); }
 
-/* ===== FIELDS ===== */
 .field {
   display: flex;
   flex-direction: column;
@@ -1072,7 +1041,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ===== SUCCESS ===== */
 .success-message {
   background: rgba(47, 125, 79, .1);
   border: 1px solid rgba(47, 125, 79, .3);
@@ -1087,7 +1055,6 @@ body.keyboard-open .cart-fab { display: none; }
 }
 .success-message.show { display: block; }
 
-/* ===== CONTACT ===== */
 .contact-card { padding: 0; overflow: hidden; }
 .contact-head {
   background: rgba(196, 30, 58, .08);
@@ -1167,7 +1134,6 @@ body.keyboard-open .cart-fab { display: none; }
   margin: 0 16px 4px;
 }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
@@ -1182,7 +1148,6 @@ a { -webkit-tap-highlight-color: transparent; }
   body.keyboard-open #app { padding-bottom: 0; }
 }
 
-/* ===== GRAIN FIELD ===== */
 .grain-field {
   position: absolute;
   inset: 0;
@@ -1207,7 +1172,6 @@ a { -webkit-tap-highlight-color: transparent; }
   100% { transform: translateY(-360px) translateX(calc(var(--drift, 18px) * 2)) rotate(360deg) scale(.5); opacity: 0; }
 }
 
-/* ===== REVEAL ===== */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -1218,7 +1182,6 @@ a { -webkit-tap-highlight-color: transparent; }
   transform: translateY(0);
 }
 
-/* ===== CONFETTI ===== */
 .confetti-piece {
   position: fixed;
   top: -20px;
