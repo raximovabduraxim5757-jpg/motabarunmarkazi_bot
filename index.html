@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>Mo'tabar Un Markazi</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+
+<div id="app">
+
+  <header>
+    <div class="header-row">
+      <img src="images/logo.jpg" alt="Mo'tabar Un Markazi" class="header-logo" />
+      <h1>Mo'tabar Un Markazi</h1>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="grain-field" id="grain-field"></div>
+        <svg class="hero-wheat-deco" viewBox="0 0 200 200">
+          <path d="M100 190V40" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="100" cy="35" rx="10" ry="17" fill="currentColor"/>
+          <ellipse cx="78" cy="60" rx="9" ry="15" transform="rotate(-38 78 60)" fill="currentColor"/>
+          <ellipse cx="122" cy="60" rx="9" ry="15" transform="rotate(38 122 60)" fill="currentColor"/>
+          <ellipse cx="72" cy="92" rx="9" ry="15" transform="rotate(-38 72 92)" fill="currentColor"/>
+          <ellipse cx="128" cy="92" rx="9" ry="15" transform="rotate(38 128 92)" fill="currentColor"/>
+          <ellipse cx="68" cy="124" rx="9" ry="15" transform="rotate(-40 68 124)" fill="currentColor"/>
+          <ellipse cx="132" cy="124" rx="9" ry="15" transform="rotate(40 132 124)" fill="currentColor"/>
+        </svg>
+        <div class="hero-icon"><img src="images/logo.jpg" alt="Mo'tabar Un Markazi" /></div>
+        <span class="hero-eyebrow">Andijon • Jaxon Bozori</span>
+        <h2>Sifatli un,<br>Barakali dasturxon</h2>
+        <p>Andijon viloyatida eng sifatli un mahsulotlarini yetkazib beruvchi ishonchli markaz.</p>
+        <button class="btn btn-glow" onclick="goToPage('zakaz')">Zakaz berish</button>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" data-count="25" data-suffix="+">0</span><span class="stat-label">Yil tajriba</span></div>
+          <div class="stat"><span class="stat-num" data-count="40"data-suffix="+">0</span><span class="stat-label">Mahsulot turi</span></div>
+          <div class="stat"><span class="stat-num" data-count="5000" data-suffix="+">0</span><span class="stat-label">Mijoz</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header reveal">
+          <h3>Tanlangan mahsulotlar</h3>
+          <a onclick="goToPage('mahsulotlar')" class="link-more">Barchasi ›</a>
+        </div>
+        <div class="product-grid" id="featured-grid"></div>
+      </section>
+
+      <div class="wheat-divider reveal">
+        <svg viewBox="0 0 24 24"><path d="M12 22V4" stroke="currentColor" stroke-width="1.6" fill="none"/><ellipse cx="12" cy="3" rx="1.6" ry="2.6" fill="currentColor"/><ellipse cx="8.4" cy="7" rx="1.4" ry="2.3" transform="rotate(-40 8.4 7)" fill="currentColor"/><ellipse cx="15.6" cy="7" rx="1.4" ry="2.3" transform="rotate(40 15.6 7)" fill="currentColor"/><ellipse cx="7.6" cy="12" rx="1.4" ry="2.3" transform="rotate(-40 7.6 12)" fill="currentColor"/><ellipse cx="16.4" cy="12" rx="1.4" ry="2.3" transform="rotate(40 16.4 12)" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 22V4" stroke="currentColor" stroke-width="1.6" fill="none"/><ellipse cx="12" cy="3" rx="1.6" ry="2.6" fill="currentColor"/><ellipse cx="8.4" cy="7" rx="1.4" ry="2.3" transform="rotate(-40 8.4 7)" fill="currentColor"/><ellipse cx="15.6" cy="7" rx="1.4" ry="2.3" transform="rotate(40 15.6 7)" fill="currentColor"/><ellipse cx="7.6" cy="12" rx="1.4" ry="2.3" transform="rotate(-40 7.6 12)" fill="currentColor"/><ellipse cx="16.4" cy="12" rx="1.4" ry="2.3" transform="rotate(40 16.4 12)" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 22V4" stroke="currentColor" stroke-width="1.6" fill="none"/><ellipse cx="12" cy="3" rx="1.6" ry="2.6" fill="currentColor"/><ellipse cx="8.4" cy="7" rx="1.4" ry="2.3" transform="rotate(-40 8.4 7)" fill="currentColor"/><ellipse cx="15.6" cy="7" rx="1.4" ry="2.3" transform="rotate(40 15.6 7)" fill="currentColor"/><ellipse cx="7.6" cy="12" rx="1.4" ry="2.3" transform="rotate(-40 7.6 12)" fill="currentColor"/><ellipse cx="16.4" cy="12" rx="1.4" ry="2.3" transform="rotate(40 16.4 12)" fill="currentColor"/></svg>
+      </div>
+
+      <section class="badges-row reveal">
+        <div class="mini-badge">✓ <span>Sifat kafolati</span></div>
+        <div class="mini-badge">🚚 <span>Tez yetkazish</span></div>
+        <div class="mini-badge">💯 <span>25+ yil tajriba</span></div>
+      </section>
+
+      <section class="about-block reveal">
+        <h3>Biz haqimizda</h3>
+        <p>Biz 25+ yildan beri optom xizmat qilamiz. Har bir mahsulotimiz qat'iy sifat nazoratidan o'tkazilgan ishonchli (O'zbekiston-Qozog'iston) unlari.</p>
+      </section>
+    </div>
+
+    <!-- MAHSULOTLAR -->
+    <div class="page" id="page-mahsulotlar">
+      <div class="page-header">
+        <h2>Mahsulotlar katalogi</h2>
+        <p><span id="product-count">40</span> ta mahsulot mavjud</p>
+      </div>
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" class="search-icon" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="search-input" placeholder="Mahsulot qidirish..." autocomplete="off" oninput="onSearchInput()" />
+        <button id="search-clear" class="search-clear" onclick="clearSearch()">✕</button>
+      </div>
+      <div class="chip-row" id="chip-row"></div>
+      <div class="product-list" id="product-list"></div>
+      <div class="empty-state" id="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <p>Hech narsa topilmadi</p>
+        <span>Boshqa kalit so'z bilan izlang</span>
+      </div>
+    </div>
+
+    <!-- ZAKAZ (Savat bilan) -->
+    <div class="page" id="page-zakaz">
+      <div class="page-header text-center">
+        <div class="order-icon">🛒</div>
+        <h2>Zakaz berish</h2>
+        <p>Ma'lumotlarni to'ldiring va operatorga yuboring.</p>
+      </div>
+
+      <!-- CART SECTION -->
+      <div id="cart-section" class="cart-section">
+        <div class="card cart-card">
+          <div class="cart-card-title">Savat <span id="cart-item-count"></span></div>
+          <div id="cart-items"></div>
+          <div class="cart-total-row">
+            <span>Umumiy summa</span>
+            <strong id="cart-total">0 so'm</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMPTY CART STATE -->
+      <div id="cart-empty-state" class="card cart-empty">
+        <div class="cart-empty-icon">🌾</div>
+        <p>Savatingiz hozircha bo'sh</p>
+        <button class="btn btn-full" onclick="goToPage('mahsulotlar')">Mahsulotlarni ko'rish</button>
+      </div>
+
+      <!-- BUYURTMA FORMASI (faqat shaxsiy ma'lumotlar) -->
+      <div class="card">
+        <div class="success-message" id="success-message">✅ Zakaz muvaffaqiyatli yuborildi!</div>
+        <form id="order-form" onsubmit="submitOrder(event)">
+          <div class="field">
+            <label for="inp-name">Ism-familiya</label>
+            <input type="text" id="inp-name" placeholder="Ismingizni kiriting" required autocomplete="off" />
+            <span class="field-error" id="err-name"></span>
+          </div>
+          <div class="field">
+            <label for="inp-phone">Telefon raqam</label>
+            <input type="tel" id="inp-phone" placeholder="90 123 45 67" required autocomplete="off" />
+            <span class="field-error" id="err-phone"></span>
+          </div>
+          <div class="field">
+            <label for="inp-address">Yetkazib berish manzili</label>
+            <div style="display:flex;gap:10px;align-items:stretch;">
+              <textarea id="inp-address" placeholder="Viloyat, tuman, ko'cha, uy..." rows="3" required style="flex:1;min-height:60px;resize:vertical;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:16px;background:var(--bg-light);color:var(--fg);outline:none;transition:border-color 0.2s;"></textarea>
+              <button type="button" onclick="getLocation()" class="btn-location" style="background:var(--primary);color:white;border:none;border-radius:10px;padding:0 14px;font-size:20px;cursor:pointer;height:auto;min-height:60px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s;box-shadow:0 2px 8px rgba(196,30,58,0.3);-webkit-tap-highlight-color:transparent;">
+                📍
+              </button>
+            </div>
+            <span class="field-error" id="err-address"></span>
+            <div style="font-size:11px;color:var(--muted-fg);margin-top:4px;">📍 tugmasini bosing yoki manzilni qo'lda yozing</div>
+          </div>
+          <button type="submit" class="btn btn-full btn-submit">Zakazni Yuborish</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ALOQA -->
+    <div class="page" id="page-aloqa">
+      <div class="page-header">
+        <h2>Aloqa va Manzil</h2>
+        <p>Biz bilan bog'laning, savollaringizga javob beramiz.</p>
+      </div>
+      <div class="card contact-card">
+        <div class="contact-head">
+          <div class="contact-avatar"><img src="images/logo.jpg" alt="Logo" /></div>
+          <div><strong>Mo'tabar Un Markazi</strong><span>Sifat kafolati va ishonch</span></div>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon"><img src="images/telegram.jpg" alt="Telegram" /></span>
+          <div><small>Telegram Operator</small><a href="https://t.me/unbaza_dostavka" target="_blank">@unbaza_dostavka</a></div>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon"><img src="images/telegram.jpg" alt="Telegram" /></span>
+          <div><small>Telegram Kanal</small><a href="https://t.me/motabar_andijon" target="_blank">@motabar_andijon</a></div>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon"><img src="images/instagram.jpg" alt="Instagram" /></span>
+          <div><small>Instagram</small><a href="https://www.instagram.com/motabar_unmarkazi" target="_blank">@motabar_unmarkazi</a></div>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon">📍</span>
+          <div><small>Manzil</small><strong>Andijon viloyati, Jaxon Bozori</strong><span style="display:block;font-size:12px;color:var(--muted-fg);margin-top:4px;">40.830129, 72.352841</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin:0 16px;">
+        <button class="btn btn-full" onclick="openMap()" style="background:var(--primary);">📍 Xaritada ko'rish</button>
+        <button class="btn btn-full btn-outline" onclick="openTelegram()">💬 Telegram orqali yozish</button>
+      </div>
+      <div class="about-block reveal">
+        <h3>Biz haqimizda</h3>
+        <p>Mo'tabar Un Markazi — Andijon viloyatida eng sifatli un mahsulotlarini yetkazib beruvchi ishonchli markaz. Biz 25+ yildan xizmat qilamiz.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CART FAB -->
+  <button id="cart-fab" class="cart-fab" onclick="goToPage('zakaz')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6"/></svg>
+    <span id="cart-fab-count">0</span>
+  </button>
+
+  <nav>
+    <a class="nav-item active" onclick="goToPage('home')" data-page="home">
+      <div class="nav-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></div>
+      <span>Bosh sahifa</span>
+    </a>
+    <a class="nav-item" onclick="goToPage('mahsulotlar')" data-page="mahsulotlar">
+      <div class="nav-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <span>Mahsulotlar</span>
+    </a>
+    <a class="nav-item" onclick="goToPage('zakaz')" data-page="zakaz">
+      <div class="nav-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6"/></svg>
+        <span class="nav-badge" id="nav-cart-badge"></span>
+      </div>
+      <span>Zakaz</span>
+    </a>
+    <a class="nav-item" onclick="goToPage('aloqa')" data-page="aloqa">
+      <div class="nav-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .99h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <span>Aloqa</span>
+    </a>
+  </nav>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
